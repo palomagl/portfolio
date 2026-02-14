@@ -58,49 +58,51 @@ const ProjectCard = ({ project, index, isInView }: { project: typeof projects[0]
       data-hover
     >
       <div className={`relative h-48 bg-gradient-to-br ${project.gradient} flex items-center justify-center overflow-hidden`}>
-        {/* LOGICA DA IMAGEM AQUI */}
         {project.image ? (
-          <motion.img
-            src={project.image}
-            alt={project.title}
-            animate={{ scale: isHovered ? 1.1 : 1 }}
+          <motion.div
+            animate={{ 
+              scale: isHovered ? 1.05 : 1,
+              y: isHovered ? -5 : 0 
+            }}
             transition={{ duration: 0.4 }}
-            className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity duration-500"
-          />
+            className="relative z-10 w-4/5 h-4/5 flex items-center justify-center"
+          >
+            <img
+              src={project.image}
+              alt={project.title}
+              className="max-w-full max-h-full rounded-lg shadow-2xl object-contain shadow-black/60" 
+            />
+          </motion.div>
         ) : (
           <motion.div 
             animate={{ scale: isHovered ? 1.1 : 1 }} 
-            transition={{ duration: 0.4 }} 
             className="text-4xl font-bold text-foreground/10 font-mono select-none"
           >
             {`<${project.title.split(" ")[0]} />`}
           </motion.div>
         )}
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: isHovered ? 1 : 0 }} transition={{ duration: 0.3 }} className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center gap-4">
-          <a 
-            href={project.link} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="p-3 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors" 
-            data-hover
-          >
+        {/* Overlay de links */}
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: isHovered ? 1 : 0 }} 
+          transition={{ duration: 0.3 }} 
+          className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center gap-4 z-20"
+        >
+          <a href={project.link} target="_blank" rel="noopener noreferrer" className="p-3 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors">
             <ExternalLink className="w-5 h-5" />
           </a>
-          <a 
-            href={project.github} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="p-3 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors" 
-            data-hover
-          >
+          <a href={project.github} target="_blank" rel="noopener noreferrer" className="p-3 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors">
             <Github className="w-5 h-5" />
           </a>
         </motion.div>
       </div>
       <div className="p-6">
         <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
-        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{t(project.descKey)}</p>
+        {/* TRADUÇÃO GARANTIDA */}
+        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+          {t(project.descKey) || project.descKey}
+        </p>
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span key={tag} className="text-xs px-2.5 py-1 rounded-md bg-primary/10 text-primary font-mono">{tag}</span>

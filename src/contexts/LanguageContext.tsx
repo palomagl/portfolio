@@ -74,7 +74,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "projects.label": { pt: "Projetos", en: "Projects" },
   "projects.title.1": { pt: "Trabalhos em ", en: "Featured " },
   "projects.title.highlight": { pt: "destaque", en: "work" },
-  "projects.dashboard.desc": {
+  "projects.barber.desc": {
     pt: "Sistema Full Stack completo com agendamentos, painel administrativo, faturamento automático e integração com WhatsApp.",
     en: "Complete Full Stack system with bookings, admin panel, automatic revenue calculation, and WhatsApp integration.",
   },
