@@ -1,73 +1,66 @@
-# Welcome to your Lovable project
+<div align="center">
 
-## Project info
+# 💜 Paloma | Portfolio
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**Desenvolvedora Full Stack apaixonada por criar interfaces modernas e sistemas eficientes**
 
-## How can I edit this code?
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-There are several ways of editing your application.
+</div>
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## ✨ Sobre o Projeto
 
-Changes made via Lovable will be committed automatically to this repo.
+Portfólio pessoal desenvolvido com React e TypeScript, apresentando projetos, habilidades técnicas e informações de contato. Interface moderna e responsiva com animações suaves e suporte a múltiplos idiomas.
 
-**Use your preferred IDE**
+## 🚀 Tecnologias
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Frontend
+- **React 18** - Biblioteca JavaScript para construção de interfaces
+- **TypeScript** - Tipagem estática para JavaScript
+- **Vite** - Build tool rápida e moderna
+- **Tailwind CSS** - Framework CSS utility-first
+- **Framer Motion** - Biblioteca de animações
+- **shadcn/ui** - Componentes UI acessíveis
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Ferramentas
+- **Git** - Controle de versão
+- **ESLint** - Linter para JavaScript/TypeScript
 
-Follow these steps:
+## 🎨 Features
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- ✨ **Design Moderno** - Interface limpa e profissional
+- 🌐 **Multi-idioma** - Suporte a português e inglês
+- 📱 **Responsivo** - Adaptável a todos os dispositivos
+- 🎭 **Animações Suaves** - Transições e efeitos com Framer Motion
+- 🎯 **Navegação Intuitiva** - Seções bem organizadas
+- 🔗 **Links para Projetos** - Acesso direto aos repositórios e demos
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 📂 Estrutura do Projeto
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
 ```
+portfolio/
+├── src/
+│   ├── components/     # Componentes React
+│   ├── contexts/       # Contextos (Language, etc)
+│   └── main.tsx        # Entry point
+├── public/             # Assets estáticos
+└── index.html          # HTML principal
+```
+## 📧 Contato
 
-**Edit a file directly in GitHub**
+Entre em contato através das redes sociais ou email disponíveis no portfólio!
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+<div align="center">
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+**Desenvolvido com ❤️ por Paloma**
 
-## What technologies are used for this project?
+⭐ Se gostou do projeto, deixe uma estrela!
 
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+</div>

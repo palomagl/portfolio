@@ -75,8 +75,8 @@ const translations: Record<string, Record<Lang, string>> = {
   "projects.title.1": { pt: "Trabalhos em ", en: "Featured " },
   "projects.title.highlight": { pt: "destaque", en: "work" },
   "projects.dashboard.desc": {
-    pt: "Dashboard interativo com gráficos dinâmicos e filtros avançados, construído com Vue 3 e Chart.js.",
-    en: "Interactive dashboard with dynamic charts and advanced filters, built with Vue 3 and Chart.js.",
+    pt: "Sistema Full Stack completo com agendamentos, painel administrativo, faturamento automático e integração com WhatsApp.",
+    en: "Complete Full Stack system with bookings, admin panel, automatic revenue calculation, and WhatsApp integration.",
   },
   "projects.ecommerce.desc": {
     pt: "Interface moderna de e-commerce com carrinho dinâmico, filtros e busca inteligente.",

@@ -4,7 +4,15 @@ import { ExternalLink, Github } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const projects = [
-  { title: "Dashboard Analytics", descKey: "projects.dashboard.desc", tags: ["Vue 3", "Chart.js", "Tailwind"], gradient: "from-primary/20 to-secondary/20" },
+  { 
+    title: "BarberShop FullStack", 
+    descKey: "projects.barber.desc", 
+    tags: ["Vue 3", "Node.js", "PostgreSQL", "JWT"], 
+    gradient: "from-amber-500/20 to-zinc-800/20",
+    github: "https://github.com/palomagl/barbearia-frontend", 
+    link: "https://barbearia-frontend-woad.vercel.app/",
+    image: "/print-barber.png"
+  },
   { title: "E-commerce UI", descKey: "projects.ecommerce.desc", tags: ["Vue 3", "JavaScript", "CSS"], gradient: "from-secondary/20 to-primary/20" },
   { title: "Task Manager", descKey: "projects.taskmanager.desc", tags: ["Vue 3", "Tailwind", "LocalStorage"], gradient: "from-primary/15 to-secondary/25" },
   { title: "Portfolio Template", descKey: "projects.portfolio.desc", tags: ["HTML", "CSS", "JavaScript"], gradient: "from-secondary/25 to-primary/15" },
@@ -50,14 +58,42 @@ const ProjectCard = ({ project, index, isInView }: { project: typeof projects[0]
       data-hover
     >
       <div className={`relative h-48 bg-gradient-to-br ${project.gradient} flex items-center justify-center overflow-hidden`}>
-        <motion.div animate={{ scale: isHovered ? 1.1 : 1 }} transition={{ duration: 0.4 }} className="text-4xl font-bold text-foreground/10 font-mono select-none">
-          {`<${project.title.split(" ")[0]} />`}
-        </motion.div>
+        {/* LOGICA DA IMAGEM AQUI */}
+        {project.image ? (
+          <motion.img
+            src={project.image}
+            alt={project.title}
+            animate={{ scale: isHovered ? 1.1 : 1 }}
+            transition={{ duration: 0.4 }}
+            className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity duration-500"
+          />
+        ) : (
+          <motion.div 
+            animate={{ scale: isHovered ? 1.1 : 1 }} 
+            transition={{ duration: 0.4 }} 
+            className="text-4xl font-bold text-foreground/10 font-mono select-none"
+          >
+            {`<${project.title.split(" ")[0]} />`}
+          </motion.div>
+        )}
+
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: isHovered ? 1 : 0 }} transition={{ duration: 0.3 }} className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center gap-4">
-          <a href="#" className="p-3 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors" data-hover>
+          <a 
+            href={project.link} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="p-3 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors" 
+            data-hover
+          >
             <ExternalLink className="w-5 h-5" />
           </a>
-          <a href="#" className="p-3 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors" data-hover>
+          <a 
+            href={project.github} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="p-3 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors" 
+            data-hover
+          >
             <Github className="w-5 h-5" />
           </a>
         </motion.div>
