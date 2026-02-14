@@ -8,7 +8,7 @@ const projects = [
     title: "BarberShop FullStack", 
     descKey: "projects.barber.desc", 
     tags: ["Vue 3", "Node.js", "PostgreSQL", "JWT"], 
-    gradient: "from-amber-500/20 to-zinc-800/20",
+    gradient: "from-purple-900/40 via-black/60 to-zinc-900/40",
     github: "https://github.com/palomagl/barbearia-frontend", 
     link: "https://barbearia-frontend-woad.vercel.app/",
     image: "/print-barber.png"
