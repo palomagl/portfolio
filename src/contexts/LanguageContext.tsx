@@ -78,9 +78,9 @@ const translations: Record<string, Record<Lang, string>> = {
     pt: "Sistema Full Stack completo com agendamentos, painel administrativo, faturamento automático e integração com WhatsApp.",
     en: "Complete Full Stack system with bookings, admin panel, automatic revenue calculation, and WhatsApp integration.",
   },
-  "projects.ecommerce.desc": {
-    pt: "Interface moderna de e-commerce com carrinho dinâmico, filtros e busca inteligente.",
-    en: "Modern e-commerce interface with dynamic cart, filters and smart search.",
+  "projects.dashboard.desc": {
+    pt: "Dashboard Full Stack para gestão de rotina, hábitos e finanças com suporte multi-idioma e interface personalizada.",
+    en: "Full Stack Dashboard for routine, habit, and finance management with multi-language support and custom interface.",
   },
   "projects.taskmanager.desc": {
     pt: "App de gerenciamento de tarefas com drag & drop, categorias e modo escuro.",

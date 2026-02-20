@@ -13,7 +13,15 @@ const projects = [
     link: "https://barbearia-frontend-woad.vercel.app/",
     image: "/print-barber.png"
   },
-  { title: "E-commerce UI", descKey: "projects.ecommerce.desc", tags: ["Vue 3", "JavaScript", "CSS"], gradient: "from-secondary/20 to-primary/20" },
+  { 
+    title: "Personal Dashboard",
+    descKey: "projects.dashboard.desc",
+    tags: ["React", "Node.js", "Prisma", "PostgreSQL", "Tailwind"], 
+    gradient: "from-blue-900/40 via-black/60 to-emerald-900/40",
+    github: "https://github.com/palomagl/dashboard", 
+    link: "https://dashboard-three-khaki-68.vercel.app/",
+    image: "/print-dashboard.png"
+  },
   { title: "Task Manager", descKey: "projects.taskmanager.desc", tags: ["Vue 3", "Tailwind", "LocalStorage"], gradient: "from-primary/15 to-secondary/25" },
   { title: "Portfolio Template", descKey: "projects.portfolio.desc", tags: ["HTML", "CSS", "JavaScript"], gradient: "from-secondary/25 to-primary/15" },
 ];
