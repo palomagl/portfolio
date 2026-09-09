@@ -11,21 +11,28 @@ interface LanguageContextType {
 const translations: Record<string, Record<Lang, string>> = {
   // Nav
   "nav.home": { pt: "Início", en: "Home" },
+  "nav.projects": { pt: "Projetos", en: "Projects" },
+  "nav.journey": { pt: "Trajetória", en: "Journey" },
+  "nav.tech": { pt: "Tecnologias", en: "Technologies" },
   "nav.about": { pt: "Sobre", en: "About" },
+  "nav.contact": { pt: "Contato", en: "Contact" },
   "nav.stack": { pt: "Stack", en: "Stack" },
   "nav.profile": { pt: "Perfil", en: "Profile" },
-  "nav.projects": { pt: "Projetos", en: "Projects" },
-  "nav.contact": { pt: "Contato", en: "Contact" },
 
   // Hero
   "hero.greeting": { pt: "Olá, eu sou", en: "Hi, I'm" },
-  "hero.role": { pt: "Desenvolvedora Front-End", en: "Front-End Developer" },
-  "hero.tagline": {
-    pt: "Criando experiências digitais modernas, performáticas e visualmente impactantes.",
-    en: "Crafting modern, high-performance and visually striking digital experiences.",
+  "hero.role": {
+    pt: "Desenvolvedora de aplicações web e experiências digitais.",
+    en: "Developer of web applications and digital experiences.",
   },
-  "hero.projects": { pt: "Ver Projetos", en: "View Projects" },
+  "hero.tagline": {
+    pt: "Eu transformo ideias em soluções reais, com foco em performance, boas experiências e um código que faz sentido.",
+    en: "I turn ideas into real solutions, focused on performance, good experiences and code that makes sense.",
+  },
+  "hero.projects": { pt: "Ver projetos", en: "View projects" },
   "hero.contact": { pt: "Contato", en: "Contact" },
+  "hero.captionRole": { pt: "Front-End Developer", en: "Front-End Developer" },
+  "hero.terminalNote": { pt: "ideias · código · projetos · realidade", en: "ideas · code · projects · reality" },
 
   // About
   "about.label": { pt: "Sobre mim", en: "About me" },
