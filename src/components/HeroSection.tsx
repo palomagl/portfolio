@@ -136,7 +136,7 @@ const HeroSection = () => {
           </div>
 
           {/* Card de terminal */}
-          <div className="absolute -left-6 top-14 rounded-lg border border-hairline bg-card/95 p-3.5 font-mono text-[11px] shadow-xl shadow-black/30 backdrop-blur-sm sm:-left-20 sm:top-16">
+          <div className="absolute -left-5 top-14 rounded-lg border border-hairline bg-card/95 p-3.5 font-mono text-[11px] shadow-xl shadow-black/30 backdrop-blur-sm sm:-left-14 sm:top-16">
             <div className="mb-2 flex gap-1.5" aria-hidden="true">
               <span className="h-2 w-2 rounded-full bg-muted-foreground/40" />
               <span className="h-2 w-2 rounded-full bg-muted-foreground/40" />
@@ -162,13 +162,17 @@ const HeroSection = () => {
             &lt;/&gt;
           </span>
 
-          {/* Texto manuscrito vertical */}
-          <span
-            className="absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-full rotate-6 pl-4 font-hand text-lg leading-tight text-muted-foreground [writing-mode:vertical-rl] xl:block"
+          {/* Texto manuscrito — 4 palavras empilhadas */}
+          <div
+            className="pointer-events-none absolute right-0 top-1/2 hidden -translate-y-1/2 translate-x-[38%] rotate-6 flex-col items-start gap-1 font-hand text-[26px] leading-none text-muted-foreground lg:flex"
             aria-hidden="true"
           >
-            {t("hero.terminalNote")}
-          </span>
+            {t("hero.terminalNote")
+              .split(" · ")
+              .map((word) => (
+                <span key={word}>{word}</span>
+              ))}
+          </div>
 
           {/* Doodles */}
           <svg

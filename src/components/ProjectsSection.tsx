@@ -1,123 +1,184 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { ExternalLink, Github } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Github } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-const projects = [
-  { 
-    title: "BarberShop FullStack", 
-    descKey: "projects.barber.desc", 
-    tags: ["Vue 3", "Node.js", "PostgreSQL", "JWT"], 
-    gradient: "from-purple-900/40 via-black/60 to-zinc-900/40",
-    github: "https://github.com/palomagl/barbearia-frontend", 
-    link: "https://barbearia-frontend-woad.vercel.app/",
-    image: "/print-barber.png"
-  },
-  { 
-    title: "Personal Dashboard",
-    descKey: "projects.dashboard.desc",
-    tags: ["React", "Node.js", "Prisma", "PostgreSQL", "Tailwind"], 
-    gradient: "from-blue-900/40 via-black/60 to-emerald-900/40",
-    github: "https://github.com/palomagl/dashboard", 
-    link: "https://dashboard-three-khaki-68.vercel.app/",
-    image: "/print-dashboard.png"
-  },
-  { title: "Task Manager", descKey: "projects.taskmanager.desc", tags: ["Vue 3", "Tailwind", "LocalStorage"], gradient: "from-primary/15 to-secondary/25" },
-  { title: "Portfolio Template", descKey: "projects.portfolio.desc", tags: ["HTML", "CSS", "JavaScript"], gradient: "from-secondary/25 to-primary/15" },
-];
+import { useReveal } from "@/hooks/useReveal";
+import { site } from "@/data/site";
+import { projectBadges, projects, type Project } from "@/data/projects";
 
 const ProjectsSection = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const { ref, revealClass } = useReveal<HTMLDivElement>();
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", dragFree: true, containScroll: "trimSnaps" });
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setCanPrev(emblaApi.canScrollPrev());
+    setCanNext(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on("select", onSelect).on("reInit", onSelect);
+  }, [emblaApi, onSelect]);
 
   return (
-    <section id="projects" className="relative py-32 px-6">
-      <div className="max-w-6xl mx-auto" ref={ref}>
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7 }} className="mb-16">
-          <p className="text-sm font-mono text-primary tracking-widest uppercase mb-3">{t("projects.label")}</p>
-          <h2 className="text-3xl md:text-4xl font-bold">
-            {t("projects.title.1")}<span className="text-gradient">{t("projects.title.highlight")}</span>
-          </h2>
-        </motion.div>
+    <section id="projetos" className="section-divider bg-section-alt py-24">
+      <div ref={ref} className={`container-page ${revealClass}`}>
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-xl">
+            <p className="eyebrow mb-3">{t("projects.eyebrow")}</p>
+            <h2 className="text-3xl font-semibold leading-[1.15] tracking-tight sm:text-[34px]">
+              {t("projects.title.1")}{" "}
+              <span className="text-gradient">{t("projects.title.2")}</span>
+            </h2>
+            <p className="mt-4 text-[15px] leading-[1.65] text-muted-foreground">
+              {t("projects.desc")}
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} isInView={isInView} />
-          ))}
+          <div className="flex items-center gap-6 md:flex-col md:items-end">
+            <a
+              href={`${site.links.github}?tab=repositories`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+              data-hover
+            >
+              {t("projects.viewAll")}
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => emblaApi?.scrollPrev()}
+                disabled={!canPrev}
+                aria-label={t("projects.prev")}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-muted-foreground transition-colors hover:text-foreground hover:border-primary/40 disabled:opacity-30 disabled:hover:text-muted-foreground disabled:hover:border-hairline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                data-hover
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => emblaApi?.scrollNext()}
+                disabled={!canNext}
+                aria-label={t("projects.next")}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-hairline text-muted-foreground transition-colors hover:text-foreground hover:border-primary/40 disabled:opacity-30 disabled:hover:text-muted-foreground disabled:hover:border-hairline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                data-hover
+              >
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 overflow-hidden" ref={emblaRef}>
+          <ul className="flex gap-5">
+            {projects.map((project) => (
+              <li
+                key={project.slug}
+                id={`projeto-${project.slug}`}
+                className="min-w-0 shrink-0 basis-[85%] scroll-mt-24 sm:basis-[46%] lg:basis-[31%] xl:basis-[28%]"
+              >
+                <ProjectCard project={project} lang={lang} t={t} />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
   );
 };
 
-const ProjectCard = ({ project, index, isInView }: { project: typeof projects[0]; index: number; isInView: boolean }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const { t } = useLanguage();
+const ProjectCard = ({
+  project,
+  lang,
+  t,
+}: {
+  project: Project;
+  lang: "pt" | "en";
+  t: (k: string) => string;
+}) => {
+  const [imgOk, setImgOk] = useState(true);
+  const description = project.description[lang] || t("projects.todoDesc");
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="group relative rounded-xl bg-card border border-border overflow-hidden glow-card gradient-border transition-transform duration-300 hover:scale-[1.02]"
-      data-hover
-    >
-      <div className={`relative h-48 bg-gradient-to-br ${project.gradient} flex items-center justify-center overflow-hidden`}>
-        {project.image ? (
-          <motion.div
-            animate={{ 
-              scale: isHovered ? 1.05 : 1,
-              y: isHovered ? -5 : 0 
-            }}
-            transition={{ duration: 0.4 }}
-            className="relative z-10 w-4/5 h-4/5 flex items-center justify-center"
-          >
-            <img
-              src={project.image}
-              alt={project.title}
-              className="max-w-full max-h-full rounded-lg shadow-2xl object-contain shadow-black/60" 
-            />
-          </motion.div>
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-hairline bg-card transition-colors hover:border-primary/30">
+      <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-primary/15 to-secondary/15">
+        {imgOk ? (
+          <img
+            src={project.image}
+            alt={`Prévia do projeto ${project.name}`}
+            loading="lazy"
+            onError={() => setImgOk(false)}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
         ) : (
-          <motion.div 
-            animate={{ scale: isHovered ? 1.1 : 1 }} 
-            className="text-4xl font-bold text-foreground/10 font-mono select-none"
-          >
-            {`<${project.title.split(" ")[0]} />`}
-          </motion.div>
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="font-mono text-sm text-foreground/25">
+              {`<${project.name.split(" ")[0]} />`}
+            </span>
+          </div>
         )}
 
-        {/* Overlay de links */}
-        <motion.div 
-          initial={{ opacity: 0 }} 
-          animate={{ opacity: isHovered ? 1 : 0 }} 
-          transition={{ duration: 0.3 }} 
-          className="absolute inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center gap-4 z-20"
-        >
-          <a href={project.link} target="_blank" rel="noopener noreferrer" className="p-3 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors">
-            <ExternalLink className="w-5 h-5" />
-          </a>
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="p-3 rounded-lg bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 transition-colors">
-            <Github className="w-5 h-5" />
-          </a>
-        </motion.div>
+        {project.badge && (
+          <span className="absolute left-3 top-3 rounded-full border border-hairline bg-background/80 px-2.5 py-1 text-[11px] font-medium text-muted-foreground backdrop-blur">
+            {projectBadges[project.badge][lang]}
+          </span>
+        )}
       </div>
-      <div className="p-6">
-        <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
-        {/* TRADUÇÃO GARANTIDA */}
-        <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-          {t(project.descKey) || project.descKey}
+
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="text-[15px] font-medium">{project.name}</h3>
+        <p className="mt-1.5 line-clamp-2 text-[13px] leading-[1.6] text-muted-foreground">
+          {description}
         </p>
-        <div className="flex flex-wrap gap-2">
+
+        <div className="mt-3 flex flex-wrap gap-1.5">
           {project.tags.map((tag) => (
-            <span key={tag} className="text-xs px-2.5 py-1 rounded-md bg-primary/10 text-primary font-mono">{tag}</span>
+            <span
+              key={tag}
+              className="rounded-md border border-hairline bg-muted/50 px-2 py-0.5 text-[11px] text-muted-foreground"
+            >
+              {tag}
+            </span>
           ))}
         </div>
+
+        {(project.live || project.repo) && (
+          <div className="mt-4 flex items-center gap-4 border-t border-hairline pt-3 text-[13px]">
+            {project.live && (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                data-hover
+              >
+                {t("projects.viewSite")}
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </a>
+            )}
+            {project.repo && (
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                data-hover
+              >
+                <Github className="h-3.5 w-3.5" />
+                {t("projects.viewCode")}
+              </a>
+            )}
+          </div>
+        )}
       </div>
-    </motion.div>
+    </article>
   );
 };
 

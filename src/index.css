@@ -211,20 +211,22 @@
     opacity: 1;
   }
 
-  /* Revelação no scroll — respeita prefers-reduced-motion */
+  /* Revelação no scroll — visível por padrão; o JS "arma" (.reveal-armed) só
+     quando IntersectionObserver está disponível e sem prefers-reduced-motion.
+     Sem JS / com reduced-motion o conteúdo aparece normalmente. */
   .reveal {
     opacity: 1;
     transform: none;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    .reveal {
+    .reveal.reveal-armed {
       opacity: 0;
       transform: translateY(15px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
-    .reveal.is-visible {
+    .reveal.reveal-armed.is-visible {
       opacity: 1;
       transform: none;
     }

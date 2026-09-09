@@ -78,24 +78,37 @@ const translations: Record<string, Record<Lang, string>> = {
   "profile.detail": { pt: "Atenção aos detalhes", en: "Attention to detail" },
 
   // Projects
-  "projects.label": { pt: "Projetos", en: "Projects" },
-  "projects.title.1": { pt: "Trabalhos em ", en: "Featured " },
-  "projects.title.highlight": { pt: "destaque", en: "work" },
-  "projects.barber.desc": {
-    pt: "Sistema Full Stack completo com agendamentos, painel administrativo, faturamento automático e integração com WhatsApp.",
-    en: "Complete Full Stack system with bookings, admin panel, automatic revenue calculation, and WhatsApp integration.",
+  "projects.eyebrow": { pt: "Meus projetos", en: "My projects" },
+  "projects.title.1": { pt: "Mais de 10 projetos", en: "More than 10 projects" },
+  "projects.title.2": {
+    pt: "construídos com muito aprendizado.",
+    en: "built with a lot of learning.",
   },
-  "projects.dashboard.desc": {
-    pt: "Dashboard Full Stack para gestão de rotina, hábitos e finanças com suporte multi-idioma e interface personalizada.",
-    en: "Full Stack Dashboard for routine, habit, and finance management with multi-language support and custom interface.",
+  "projects.desc": {
+    pt: "Cada projeto é uma parte da minha jornada. Clique, explore e veja de perto o que eu já criei.",
+    en: "Each project is a part of my journey. Click, explore and take a closer look at what I've built.",
   },
-  "projects.taskmanager.desc": {
-    pt: "App de gerenciamento de tarefas com drag & drop, categorias e modo escuro.",
-    en: "Task management app with drag & drop, categories and dark mode.",
+  "projects.viewAll": { pt: "Ver todos os projetos", en: "View all projects" },
+  "projects.viewSite": { pt: "Ver site", en: "View site" },
+  "projects.viewCode": { pt: "Código", en: "Code" },
+  "projects.prev": { pt: "Projetos anteriores", en: "Previous projects" },
+  "projects.next": { pt: "Próximos projetos", en: "Next projects" },
+  "projects.todoDesc": { pt: "Descrição em breve.", en: "Description coming soon." },
+
+  // Journey
+  "journey.eyebrow": { pt: "Experiência & trajetória", en: "Experience & journey" },
+  "journey.title": { pt: "Cada fase me trouxe até aqui.", en: "Every step brought me here." },
+  "journey.desc": {
+    pt: "Trabalho, estudos e projetos que construíram a pessoa e a desenvolvedora que sou hoje.",
+    en: "Work, studies and projects that shaped the person and the developer I am today.",
   },
-  "projects.portfolio.desc": {
-    pt: "Template de portfólio responsivo e animado com design minimalista e moderno.",
-    en: "Responsive and animated portfolio template with minimalist, modern design.",
+
+  // Process — Como eu construo
+  "process.eyebrow": { pt: "Como eu construo", en: "How I build" },
+  "process.title": { pt: "Da ideia ao deploy.", en: "From idea to deploy." },
+  "process.desc": {
+    pt: "Meu processo é um ciclo constante de aprendizado, testes e melhorias.",
+    en: "My process is a constant cycle of learning, testing and improving.",
   },
 
   // Contact
