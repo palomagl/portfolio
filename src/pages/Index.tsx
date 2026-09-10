@@ -5,9 +5,9 @@ import HeroSection from "@/components/HeroSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import JourneySection from "@/components/JourneySection";
 import ProcessSection from "@/components/ProcessSection";
-import StackSection from "@/components/StackSection";
+import TechSection from "@/components/TechSection";
 import AboutSection from "@/components/AboutSection";
-import ContactSection from "@/components/ContactSection";
+import SiteFooter from "@/components/SiteFooter";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const Index = () => {
@@ -22,11 +22,10 @@ const Index = () => {
           <ProjectsSection />
           <JourneySection />
           <ProcessSection />
-          {/* Fase 5–7: TechSection substitui StackSection; AboutSection encolhe; footer novo substitui ContactSection */}
-          <StackSection />
+          <TechSection />
           <AboutSection />
-          <ContactSection />
         </main>
+        <SiteFooter />
       </div>
     </LanguageProvider>
   );

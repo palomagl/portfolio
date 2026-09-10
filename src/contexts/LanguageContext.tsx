@@ -16,8 +16,6 @@ const translations: Record<string, Record<Lang, string>> = {
   "nav.tech": { pt: "Tecnologias", en: "Technologies" },
   "nav.about": { pt: "Sobre", en: "About" },
   "nav.contact": { pt: "Contato", en: "Contact" },
-  "nav.stack": { pt: "Stack", en: "Stack" },
-  "nav.profile": { pt: "Perfil", en: "Profile" },
 
   // Hero
   "hero.greeting": { pt: "Olá, eu sou", en: "Hi, I'm" },
@@ -52,30 +50,28 @@ const translations: Record<string, Record<Lang, string>> = {
   },
   "about.badge.frontend": { pt: "Front-End", en: "Front-End" },
 
-  // Stack
-  "stack.label": { pt: "Stack", en: "Stack" },
-  "stack.title.1": { pt: "Minhas ", en: "My " },
-  "stack.title.highlight": { pt: "ferramentas", en: "tools" },
-  "stack.category.frontend": { pt: "Front-end", en: "Front-end" },
-  "stack.category.backend": { pt: "Back-end", en: "Back-end" },
-  "stack.category.database": { pt: "Bancos de Dados", en: "Databases" },
-  "stack.category.cloud": { pt: "Cloud & Tools", en: "Cloud & Tools" },
-  "stack.advanced": { pt: "Avançado", en: "Advanced" },
-  "stack.intermediate_advanced": { pt: "Avançado", en: "Advanced" },
-  "stack.intermediate": { pt: "Intermediário", en: "Intermediate" },
-  "stack.basic_intermediate": { pt: "Intermediário", en: "Intermediate" },
-  "stack.basic": { pt: "Intermediário", en: "Intermediate" },
+  // Tech — Tecnologias
+  "tech.eyebrow": { pt: "Tecnologias", en: "Technologies" },
+  "tech.title": {
+    pt: "As ferramentas do meu dia a dia.",
+    en: "The tools I reach for every day.",
+  },
+  "tech.desc": {
+    pt: "Stack principal por trás dos meus projetos — do front-end ao banco de dados.",
+    en: "The core stack behind my projects — from the front-end to the database.",
+  },
+  "tech.secondary": { pt: "Também trabalho com", en: "I also work with" },
+  "tech.projects": {
+    pt: "Projetos que usam essas tecnologias",
+    en: "Projects built with these technologies",
+  },
 
-  // Profile
-  "profile.label": { pt: "Perfil", en: "Profile" },
-  "profile.title.1": { pt: "Meu ", en: "My " },
-  "profile.title.highlight": { pt: "perfil", en: "profile" },
-  "profile.teamwork": { pt: "Trabalho em equipe", en: "Teamwork" },
-  "profile.communication": { pt: "Comunicação clara", en: "Clear communication" },
-  "profile.organization": { pt: "Organização", en: "Organization" },
-  "profile.learning": { pt: "Facilidade de aprendizado", en: "Fast learner" },
-  "profile.commitment": { pt: "Comprometimento", en: "Commitment" },
-  "profile.detail": { pt: "Atenção aos detalhes", en: "Attention to detail" },
+  // Footer
+  "footer.tagline": { pt: "Sempre em evolução.", en: "Always evolving." },
+  "footer.talk": { pt: "Vamos conversar?", en: "Let's talk?" },
+  "footer.thanks": { pt: "obrigada por visitar!", en: "thanks for visiting!" },
+  "footer.rights": { pt: "Todos os direitos reservados.", en: "All rights reserved." },
+  "footer.made": { pt: "Feito com", en: "Made with" },
 
   // Projects
   "projects.eyebrow": { pt: "Meus projetos", en: "My projects" },
@@ -93,6 +89,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "projects.viewCode": { pt: "Código", en: "Code" },
   "projects.prev": { pt: "Projetos anteriores", en: "Previous projects" },
   "projects.next": { pt: "Próximos projetos", en: "Next projects" },
+  "projects.page": { pt: "Página", en: "Page" },
   "projects.todoDesc": { pt: "Descrição em breve.", en: "Description coming soon." },
 
   // Journey
@@ -109,23 +106,6 @@ const translations: Record<string, Record<Lang, string>> = {
   "process.desc": {
     pt: "Meu processo é um ciclo constante de aprendizado, testes e melhorias.",
     en: "My process is a constant cycle of learning, testing and improving.",
-  },
-
-  // Contact
-  "contact.label": { pt: "Contato", en: "Contact" },
-  "contact.title.1": { pt: "Vamos ", en: "Let's " },
-  "contact.title.highlight": { pt: "trabalhar juntos", en: "work together" },
-  "contact.title.2": { pt: "?", en: "?" },
-  "contact.subtitle": {
-    pt: "Estou sempre aberta a novas oportunidades, projetos interessantes e conversas sobre tecnologia.",
-    en: "I'm always open to new opportunities, interesting projects and conversations about technology.",
-  },
-  "contact.github": { pt: "Veja meu código", en: "See my code" },
-  "contact.linkedin": { pt: "Conecte-se comigo", en: "Connect with me" },
-  "contact.email": { pt: "Envie uma mensagem", en: "Send a message" },
-  "contact.footer": {
-    pt: "Feito com 💜 por Paloma Lorenzon",
-    en: "Made with 💜 by Paloma Lorenzon",
   },
 };
 

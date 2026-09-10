@@ -40,9 +40,12 @@ const Navbar = () => {
     >
       <nav className="container-page flex items-center justify-between py-4" aria-label="Principal">
         <a href="#inicio" className="flex items-center gap-2.5" data-hover>
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-hairline font-mono text-sm text-primary">
-            &lt;/&gt;
-          </span>
+          <img
+            src={site.logo}
+            alt=""
+            aria-hidden="true"
+            className="h-8 w-8 rounded-full object-cover"
+          />
           <span className="text-sm font-medium">{site.name}</span>
         </a>
 

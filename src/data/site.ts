@@ -5,6 +5,7 @@
 export const site = {
   name: "Paloma Lorenzon",
   role: "Front-End Developer",
+  logo: "/logo-redondo-180.png", // logo da marca (favicon fica separada, em index.html)
   photo: "/paloma.jpg", // TODO: adicionar arquivo em public/paloma.jpg (retrato ~900x1100)
   email: "palomaalorenzon@gmail.com",
   links: {

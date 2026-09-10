@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Github, ImageIcon, Linkedin, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { site } from "@/data/site";
@@ -7,12 +8,23 @@ const HeroSection = () => {
   const { t } = useLanguage();
   const [photoState, setPhotoState] = useState<"loading" | "ok" | "error">("loading");
 
+  const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const blobA = useTransform(scrollY, [0, 700], [0, reduce ? 0 : 90]);
+  const blobB = useTransform(scrollY, [0, 700], [0, reduce ? 0 : -70]);
+
   return (
     <section id="inicio" className="relative overflow-hidden">
-      {/* Brilhos de fundo */}
+      {/* Brilhos de fundo (parallax no scroll) */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        <div className="absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-primary/10 blur-[130px]" />
-        <div className="absolute bottom-0 right-1/4 h-80 w-80 rounded-full bg-secondary/10 blur-[130px]" />
+        <motion.div
+          style={{ y: blobA }}
+          className="absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-primary/10 blur-[130px]"
+        />
+        <motion.div
+          style={{ y: blobB }}
+          className="absolute bottom-0 right-1/4 h-80 w-80 rounded-full bg-secondary/10 blur-[130px]"
+        />
       </div>
 
       <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-28 lg:min-h-[calc(100vh-4rem)] lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">

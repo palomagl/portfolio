@@ -14,14 +14,14 @@ Ordem das seções: header fixo · hero · projetos · trajetória · como eu co
 | 2 | Projetos (carrossel) | ✅ feito |
 | 3 | Trajetória (timeline) | ✅ feito |
 | 4 | Como eu construo (5 etapas) | ✅ feito |
-| 5 | Tecnologias (grafo orbital + "também trabalho com") | ⬜ a fazer |
-| 6 | Sobre (versão curta) + Footer novo | ⬜ a fazer |
-| 7 | Passada final (responsivo, a11y, polimento, limpeza, code-split) | ⬜ a fazer |
+| 5 | Tecnologias (grafo orbital + "também trabalho com") | ✅ feito |
+| 6 | Sobre (versão curta) + Footer novo | ✅ feito |
+| 7 | Passada final (responsivo, a11y, polimento, limpeza, code-split) | 🟨 parcial |
 
-**Estado atual da página:** hero + projetos + trajetória + como eu construo já estão no novo design.
-Abaixo disso ainda renderizam as seções **antigas** (`StackSection`, `AboutSection`, `ContactSection`),
-que serão substituídas nas fases 5–6. A nav já aponta para as âncoras novas
-(`#tecnologias` e `#sobre` só passam a rolar para algo quando as fases 5–6 existirem).
+**Estado atual da página:** todas as seções estão no novo design —
+hero · projetos · trajetória · como eu construo · tecnologias · sobre · footer.
+`StackSection`, `ContactSection` e `ProfileSection` foram removidas; a nav aponta
+para todas as âncoras (`#tecnologias`, `#sobre`, `#contato`) e todas existem.
 
 ---
 
@@ -83,26 +83,44 @@ que serão substituídas nas fases 5–6. A nav já aponta para as âncoras nova
 ## O que falta
 
 ### Fases de código
-- **Fase 5 — Tecnologias:** grafo orbital (centro `</>` + 8 satélites: React, TypeScript, Tailwind,
-  Node.js, Supabase, PostgreSQL, Git, Python) com linhas ligando ao centro; vira grade no mobile.
-  Bloco "Também trabalho com" abaixo. Card "Projetos que usam essas tecnologias" gerado a partir de
-  `projects.ts`, cada item rolando até `#projeto-<slug>`. **Remover `StackSection`.** Dados já em
-  `src/data/technologies.tsx`.
-- **Fase 6 — Sobre + Footer:** encolher `AboutSection` para uma seção curta com âncora `#sobre` (reaproveitar
-  os 2 parágrafos do `LanguageContext`). Footer novo em 3 colunas ("Sempre em evolução." / "Vamos conversar?"
-  com GitHub·LinkedIn·Email / manuscrito "obrigada por visitar!") + barra inferior (© + "Feito com ♥").
-  Âncora `#contato` aponta para o footer. **Remover `ContactSection`.**
-- **Fase 7 — Polimento:**
+- **Fase 7 — Polimento (o que ainda falta):**
   - Respiro vertical do hero em telas altas ainda um pouco grande.
   - Conectores da timeline e do processo estão discretos demais; a referência tem setinha na ponta.
-  - Alinhar "Ver todos os projetos" ao topo do cabeçalho da seção.
-  - Revisão de responsivo (mobile de verdade) e acessibilidade (foco, `alt`, `aria`).
-  - `prefers-reduced-motion` ponta a ponta.
-  - Code-split: bundle passou de ~470 KB para ~505 KB (react-icons + seções). Avaliar `manualChunks`.
-  - Remover código morto: `ProfileSection.tsx` (já fora do Index), `StackSection`/`AboutSection`/
-    `ContactSection` após substituição, chaves de i18n órfãs (`stack.*`, `profile.*`, `projects.barber.desc` etc.).
+  - Revisão de responsivo em mobile real (testado só no build/preview até agora).
   - Trocar prints antigos soltos em `public/` pelos de `public/projects/`.
-  - `CustomCursor` e `ParticleBackground`: decidir se ficam.
+  - `favicon.png` tem 452 KB — otimizar (é só a favicon agora, mas ainda pesa).
+  - `CustomCursor`: decidir se fica.
+
+### Fase 7 — já feito
+- **Fase 5 — Tecnologias:** `TechSection.tsx` — grafo orbital (centro `</>` + 8 satélites: React,
+  TypeScript, Tailwind, Node.js, Supabase, PostgreSQL, Git, Python) com linhas SVG ligando ao centro;
+  vira grade 3 colunas no mobile. Bloco "Também trabalho com" (pills de `secondaryTech`). Card
+  "Projetos que usam essas tecnologias" gerado de `projects.ts`, cada chip rolando até `#projeto-<slug>`.
+- **Fase 6 — Sobre + Footer:** `AboutSection.tsx` reescrito como seção curta `#sobre` (mesmo layout
+  esquerda/direita das outras, reaproveita `about.p1/p2/motto`). `SiteFooter.tsx` novo em 3 colunas
+  ("Sempre em evolução." / "Vamos conversar?" com GitHub·LinkedIn·Email / manuscrito "obrigada por
+  visitar!") + barra inferior (© ano + "Feito com ♥"). Âncora `#contato` no footer.
+- **Limpeza:** removidos `StackSection.tsx`, `ContactSection.tsx`, `ProfileSection.tsx` e as chaves
+  de i18n órfãs (`stack.*`, `profile.*`, `contact.*`, `nav.stack`, `nav.profile`).
+- **Code-split:** `manualChunks` em `vite.config.ts` (react-vendor / motion / icons). Bundle principal
+  caiu de ~535 KB para ~240 KB (maior chunk); aviso de "chunk > 500 KB" sumiu.
+- **a11y / reduced-motion:** seções novas usam `useReveal` (respeita `prefers-reduced-motion`),
+  ícones decorativos com `aria-hidden`, foco visível nos links.
+- **Grafo de tecnologias (harmonia):** anel orbital tracejado + glow central ligando os 8 nós,
+  rótulos em linha única (`short` em `technologies.tsx` p/ "Tailwind"), blocos "Também trabalho com" e
+  "Projetos que usam" separados por hairline (sem card solto).
+- **Fundo interativo (`ParticleBackground.tsx` reescrito):** partículas reagem ao cursor (repele +
+  linhas até o mouse) e um foco de luz radial segue o mouse (`--pointer-x/y` no `:root`).
+  Reescrito com dpr cap, pausa em aba oculta, cor lida de `--primary` (segue o tema) e RAF sem leak.
+  Com `prefers-reduced-motion` vira campo estático e o foco de luz não renderiza.
+- **Parallax no hero:** os dois brilhos de fundo têm `y` ligado ao scroll via framer-motion
+  (`useScroll`/`useTransform`), zerado com `useReducedMotion`.
+- **Projetos em grade paginada:** carrossel embla trocado por grade 2×4 (`grid-cols-2 lg:grid-cols-4`),
+  setas prev/next + dots, transição slide com `AnimatePresence`. Link `#projeto-<slug>` da seção
+  Tecnologias abre a página certa e rola até o card (listener de `hashchange`).
+- **Logo própria:** `site.logo` (`/logo-redondo-180.png`) substitui o glifo `</>` na Navbar, no centro
+  do grafo de tecnologias e no footer (frames arredondados como `rounded-full`, logo é redonda).
+  A favicon (`/favicon.png` em `index.html`) continua separada.
 
 ### Pendências de conteúdo (da Paloma)
 - [ ] Foto do hero → `public/paloma.jpg` (retrato ~900×1100).
@@ -144,4 +162,4 @@ que serão substituídas nas fases 5–6. A nav já aponta para as âncoras nova
 
 ---
 
-_Última atualização: fases 0–4 concluídas._
+_Última atualização: fases 0–6 concluídas; fase 7 parcial (limpeza + code-split + a11y das seções novas feitos)._

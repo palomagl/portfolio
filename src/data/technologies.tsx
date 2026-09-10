@@ -32,6 +32,8 @@ export type TechTier = "orbital" | "secondary";
 
 export interface Tech {
   name: string;
+  /** Rótulo curto para o grafo orbital (evita quebra de linha). */
+  short?: string;
   Icon: IconType;
   color: string;
   tier: TechTier;
@@ -40,8 +42,8 @@ export interface Tech {
 export const technologies: Tech[] = [
   // ---- Grafo orbital ----
   { name: "React", Icon: SiReact, color: "#61DAFB", tier: "orbital" },
-  { name: "TypeScript", Icon: SiTypescript, color: "#3178C6", tier: "orbital" },
-  { name: "Tailwind CSS", Icon: SiTailwindcss, color: "#38BDF8", tier: "orbital" },
+  { name: "TypeScript", short: "TypeScript", Icon: SiTypescript, color: "#3178C6", tier: "orbital" },
+  { name: "Tailwind CSS", short: "Tailwind", Icon: SiTailwindcss, color: "#38BDF8", tier: "orbital" },
   { name: "Node.js", Icon: SiNodedotjs, color: "#5FA04E", tier: "orbital" },
   { name: "Supabase", Icon: SiSupabase, color: "#3FCF8E", tier: "orbital" },
   { name: "PostgreSQL", Icon: SiPostgresql, color: "#4169E1", tier: "orbital" },
