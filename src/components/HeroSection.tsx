@@ -8,22 +8,28 @@ const HeroSection = () => {
   const { t } = useLanguage();
   const [photoState, setPhotoState] = useState<"loading" | "ok" | "error">("loading");
 
-  const reduce = useReducedMotion();
+  // Em touch não vale a pena animar o parallax: sem o scroll suave do mouse
+  // wheel, o listener de scroll do framer-motion só custa CPU à toa, e
+  // blur(130px) recalculado a cada frame é um dos efeitos mais caros pra GPU
+  // de celular. Mobile ganha os brilhos parados e com blur bem menor.
+  const isTouch =
+    typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+  const reduce = useReducedMotion() || isTouch;
   const { scrollY } = useScroll();
   const blobA = useTransform(scrollY, [0, 700], [0, reduce ? 0 : 90]);
   const blobB = useTransform(scrollY, [0, 700], [0, reduce ? 0 : -70]);
 
   return (
     <section id="inicio" className="relative overflow-hidden">
-      {/* Brilhos de fundo (parallax no scroll) */}
+      {/* Brilhos de fundo (parallax no scroll, só em desktop) */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <motion.div
           style={{ y: blobA }}
-          className="absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-primary/10 blur-[130px]"
+          className="absolute -top-24 left-1/4 h-96 w-96 rounded-full bg-primary/10 blur-2xl md:blur-[130px]"
         />
         <motion.div
           style={{ y: blobB }}
-          className="absolute bottom-0 right-1/4 h-80 w-80 rounded-full bg-secondary/10 blur-[130px]"
+          className="absolute bottom-0 right-1/4 h-80 w-80 rounded-full bg-secondary/10 blur-2xl md:blur-[130px]"
         />
       </div>
 
@@ -33,24 +39,28 @@ const HeroSection = () => {
           <div className="flex items-start justify-between gap-4">
             <p className="hero-rise eyebrow mb-4">{t("hero.greeting")}</p>
 
-            {/* Foto pequena — só no mobile/tablet, onde o retrato grande da coluna direita some */}
+            {/* Foto — só no mobile/tablet, onde o retrato grande da coluna direita some.
+                Anel em gradiente (mesma dupla de cores do "Lorenzon" no H1) pra dar destaque
+                sem virar a foto gigante que ocupava a tela toda. */}
             <div
-              className="hero-rise h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-hairline bg-muted/60 lg:hidden"
+              className="hero-rise shrink-0 rounded-[28px] bg-gradient-to-br from-primary to-secondary p-[3px] shadow-[0_10px_30px_-10px_hsl(var(--glow-primary)/0.55)] lg:hidden"
               style={{ animationDelay: "0.08s" }}
             >
-              {photoState !== "ok" && (
-                <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-                  <ImageIcon className="h-5 w-5" aria-hidden="true" />
-                </div>
-              )}
-              <img
-                src={site.photo}
-                alt="Paloma Lorenzon"
-                hidden={photoState !== "ok"}
-                onLoad={() => setPhotoState("ok")}
-                onError={() => setPhotoState("error")}
-                className="h-full w-full object-cover"
-              />
+              <div className="h-24 w-24 overflow-hidden rounded-[25px] bg-muted/60">
+                {photoState !== "ok" && (
+                  <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+                    <ImageIcon className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                )}
+                <img
+                  src={site.photo}
+                  alt="Paloma Lorenzon"
+                  hidden={photoState !== "ok"}
+                  onLoad={() => setPhotoState("ok")}
+                  onError={() => setPhotoState("error")}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
           </div>
 

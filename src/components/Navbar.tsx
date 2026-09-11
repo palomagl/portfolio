@@ -21,9 +21,12 @@ const Navbar = () => {
   const { t } = useLanguage();
 
   useEffect(() => {
+    // `passive: true` evita que o listener trave o thread de scroll — sem
+    // isso, o navegador espera o handler rodar antes de conseguir rolar a
+    // página, o que é sentido como travadinha no celular.
     const handleScroll = () => setIsScrolled(window.scrollY > 24);
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -34,7 +37,10 @@ const Navbar = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-hairline"
+          ? // Sem blur no mobile: backdrop-blur é caro pra GPU e a navbar fica
+            // fixa recalculando o tempo todo enquanto a página rola. Um fundo
+            // sólido mais opaco resolve visualmente quase igual e é de graça.
+            "bg-background/95 border-b border-hairline md:bg-background/80 md:backdrop-blur-xl"
           : "bg-transparent"
       }`}
     >
@@ -93,7 +99,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-b border-hairline bg-background/95 backdrop-blur-xl md:hidden"
+            className="overflow-hidden border-b border-hairline bg-background/95 md:hidden"
           >
             <div className="container-page flex flex-col gap-4 py-4">
               {navKeys.map((item) => (
