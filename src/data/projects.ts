@@ -159,7 +159,7 @@ export const projects: Project[] = [
     tags: ["React", "TypeScript", "Tailwind", "Framer Motion"],
     repo: "https://github.com/palomagl/study_maps",
     live: "https://study-maps.vercel.app",
-    image: "/projects/studymaps.png",
+    image: "/projects/studymaps.webp",
     badge: "dev",
     group: "desenvolvimento",
   },

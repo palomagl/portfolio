@@ -30,7 +30,29 @@ const HeroSection = () => {
       <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-28 lg:min-h-[calc(100vh-4rem)] lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
         {/* Coluna esquerda */}
         <div>
-          <p className="hero-rise eyebrow mb-4">{t("hero.greeting")}</p>
+          <div className="flex items-start justify-between gap-4">
+            <p className="hero-rise eyebrow mb-4">{t("hero.greeting")}</p>
+
+            {/* Foto pequena — só no mobile/tablet, onde o retrato grande da coluna direita some */}
+            <div
+              className="hero-rise h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-hairline bg-muted/60 lg:hidden"
+              style={{ animationDelay: "0.08s" }}
+            >
+              {photoState !== "ok" && (
+                <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+                  <ImageIcon className="h-5 w-5" aria-hidden="true" />
+                </div>
+              )}
+              <img
+                src={site.photo}
+                alt="Paloma Lorenzon"
+                hidden={photoState !== "ok"}
+                onLoad={() => setPhotoState("ok")}
+                onError={() => setPhotoState("error")}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
 
           <h1
             className="hero-rise text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-[68px]"
@@ -117,10 +139,34 @@ const HeroSection = () => {
               </a>
             </li>
           </ul>
+
+          {/* Terminal compacto — só no mobile/tablet, no fluxo normal (sem a foto grande atrás) */}
+          <div
+            className="hero-rise mt-8 inline-block rounded-lg border border-hairline bg-card/95 p-3.5 font-mono text-[11px] shadow-sm lg:hidden"
+            style={{ animationDelay: "0.48s" }}
+          >
+            <div className="mb-2 flex gap-1.5" aria-hidden="true">
+              <span className="h-2 w-2 rounded-full bg-muted-foreground/40" />
+              <span className="h-2 w-2 rounded-full bg-muted-foreground/40" />
+              <span className="h-2 w-2 rounded-full bg-muted-foreground/40" />
+            </div>
+            {["build", "create", "improve"].map((line) => (
+              <p key={line} className="leading-5">
+                <span className="text-primary">&gt;</span> {line}
+              </p>
+            ))}
+            <p className="leading-5">
+              <span className="text-primary">&gt;</span> repeat
+              <span className="blink">_</span>
+            </p>
+          </div>
         </div>
 
-        {/* Coluna direita */}
-        <div className="hero-rise relative mx-auto w-full max-w-[340px] sm:max-w-[360px]" style={{ animationDelay: "0.24s" }}>
+        {/* Coluna direita — retrato grande, só a partir de lg (no mobile vira a foto pequena acima) */}
+        <div
+          className="hero-rise relative mx-auto hidden w-full max-w-[340px] sm:max-w-[360px] lg:block"
+          style={{ animationDelay: "0.24s" }}
+        >
           <div className="relative aspect-[9/11] w-full">
             {/* Placeholder — some sozinho quando /paloma.jpg entrar na pasta public */}
             {photoState !== "ok" && (
