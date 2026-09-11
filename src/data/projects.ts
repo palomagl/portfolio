@@ -145,7 +145,7 @@ export const projects: Project[] = [
     tags: ["React", "TypeScript", "Tailwind", "Zustand", "Express"],
     repo: "https://github.com/palomagl/nexa_ia",
     live: "", // ainda não publicado
-    image: "/projects/nexa-ia.png",
+    image: "/projects/nexa-ia.webp",
     badge: "dev",
     group: "desenvolvimento",
   },
