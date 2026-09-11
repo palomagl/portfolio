@@ -38,11 +38,11 @@ const TechSection = () => {
         </div>
 
         <div className="space-y-10">
-          {/* Grafo orbital (sm+) */}
-          <div className="relative mx-auto hidden aspect-square w-full max-w-[380px] py-4 sm:block">
+          {/* Grafo orbital — em todas as larguras, com tamanhos menores no mobile */}
+          <div className="relative mx-auto aspect-square w-full max-w-[380px] py-4">
             <div
               aria-hidden="true"
-              className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl"
+              className="absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-3xl sm:h-40 sm:w-40"
             />
 
             <svg
@@ -76,10 +76,10 @@ const TechSection = () => {
             </svg>
 
             <div
-              className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-full border border-hairline bg-card shadow-sm"
+              className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-full border border-hairline bg-card shadow-sm sm:h-16 sm:w-16"
               style={{ boxShadow: "0 0 40px hsl(var(--glow-primary) / 0.22)" }}
             >
-              <img src={site.logo} alt="" aria-hidden="true" className="h-11 w-11 object-cover" />
+              <img src={site.logo} alt="" aria-hidden="true" className="h-9 w-9 object-cover sm:h-11 sm:w-11" />
             </div>
 
             {orbitNodes.map((node) => {
@@ -90,32 +90,20 @@ const TechSection = () => {
                   className="group absolute -translate-x-1/2 -translate-y-1/2"
                   style={{ left: `${node.x}%`, top: `${node.y}%` }}
                 >
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-hairline bg-card shadow-sm transition-transform duration-300 group-hover:scale-110">
-                    <Icon className="h-[22px] w-[22px]" style={{ color: node.color }} aria-hidden="true" />
+                  <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-hairline bg-card shadow-sm transition-transform duration-300 group-hover:scale-110 sm:h-11 sm:w-11">
+                    <Icon
+                      className="h-4 w-4 sm:h-[22px] sm:w-[22px]"
+                      style={{ color: node.color }}
+                      aria-hidden="true"
+                    />
                   </span>
-                  <span className="absolute left-1/2 top-[calc(100%+6px)] -translate-x-1/2 whitespace-nowrap text-[11px] text-muted-foreground">
+                  <span className="absolute left-1/2 top-[calc(100%+4px)] -translate-x-1/2 whitespace-nowrap text-[9px] text-muted-foreground sm:top-[calc(100%+6px)] sm:text-[11px]">
                     {node.label}
                   </span>
                 </div>
               );
             })}
           </div>
-
-          {/* Grade (mobile) */}
-          <ul className="grid grid-cols-3 gap-3 sm:hidden">
-            {orbitalTech.map((tech) => {
-              const Icon = tech.Icon;
-              return (
-                <li
-                  key={tech.name}
-                  className="flex flex-col items-center gap-2 rounded-xl border border-hairline bg-card p-4"
-                >
-                  <Icon className="h-6 w-6" style={{ color: tech.color }} aria-hidden="true" />
-                  <span className="text-center text-[11px] text-muted-foreground">{tech.short ?? tech.name}</span>
-                </li>
-              );
-            })}
-          </ul>
 
           {/* Também trabalho com */}
           <div className="border-t border-hairline pt-10">

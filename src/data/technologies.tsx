@@ -46,7 +46,7 @@ export const technologies: Tech[] = [
   { name: "Tailwind CSS", short: "Tailwind", Icon: SiTailwindcss, color: "#38BDF8", tier: "orbital" },
   { name: "Node.js", Icon: SiNodedotjs, color: "#5FA04E", tier: "orbital" },
   { name: "Supabase", Icon: SiSupabase, color: "#3FCF8E", tier: "orbital" },
-  { name: "PostgreSQL", Icon: SiPostgresql, color: "#4169E1", tier: "orbital" },
+  { name: "PostgreSQL", short: "Postgres", Icon: SiPostgresql, color: "#4169E1", tier: "orbital" },
   { name: "Git", Icon: SiGit, color: "#F05032", tier: "orbital" },
   { name: "Python", Icon: SiPython, color: "#F7C948", tier: "orbital" },
 

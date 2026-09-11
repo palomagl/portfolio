@@ -26,7 +26,12 @@ const ParticleBackground = () => {
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
-    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const prefersReduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    // Sem mouse de verdade, o efeito de repulsão/linhas não faz sentido — e o loop a
+    // 60fps custa CPU/bateria à toa no celular. Em touch, cai pro mesmo desenho estático
+    // usado para prefers-reduced-motion.
+    const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const reduce = prefersReduce || isTouch;
     const RANGE = 170;
 
     let width = 0;

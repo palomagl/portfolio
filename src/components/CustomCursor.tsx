@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
+const isTouchDevice = () =>
+  typeof window !== "undefined" &&
+  ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
 const CustomCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Em touch não há cursor: não anexa nenhum listener (evita gasto de CPU à toa no mobile).
+    if (isTouchDevice()) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
       setIsVisible(true);
@@ -15,44 +22,35 @@ const CustomCursor = () => {
     const handleMouseEnter = () => setIsVisible(true);
     const handleMouseLeave = () => setIsVisible(false);
 
-    const handleHoverStart = () => setIsHovering(true);
-    const handleHoverEnd = () => setIsHovering(false);
+    // Delegação de evento única no document: cobre elementos criados depois,
+    // sem precisar re-anexar listener por elemento (isso vazava memória antes).
+    const handleOver = (e: MouseEvent) => {
+      if ((e.target as HTMLElement)?.closest?.("a, button, [data-hover]")) {
+        setIsHovering(true);
+      }
+    };
+    const handleOut = (e: MouseEvent) => {
+      if ((e.target as HTMLElement)?.closest?.("a, button, [data-hover]")) {
+        setIsHovering(false);
+      }
+    };
 
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseenter", handleMouseEnter);
     document.addEventListener("mouseleave", handleMouseLeave);
-
-    const interactiveElements = document.querySelectorAll("a, button, [data-hover]");
-    interactiveElements.forEach((el) => {
-      el.addEventListener("mouseenter", handleHoverStart);
-      el.addEventListener("mouseleave", handleHoverEnd);
-    });
+    document.addEventListener("mouseover", handleOver);
+    document.addEventListener("mouseout", handleOut);
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseenter", handleMouseEnter);
       document.removeEventListener("mouseleave", handleMouseLeave);
-      interactiveElements.forEach((el) => {
-        el.removeEventListener("mouseenter", handleHoverStart);
-        el.removeEventListener("mouseleave", handleHoverEnd);
-      });
+      document.removeEventListener("mouseover", handleOver);
+      document.removeEventListener("mouseout", handleOut);
     };
   }, []);
 
-  // Re-attach hover listeners when DOM changes
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      const interactiveElements = document.querySelectorAll("a, button, [data-hover]");
-      interactiveElements.forEach((el) => {
-        el.addEventListener("mouseenter", () => setIsHovering(true));
-        el.addEventListener("mouseleave", () => setIsHovering(false));
-      });
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, []);
-
-  if (typeof window !== "undefined" && "ontouchstart" in window) return null;
+  if (isTouchDevice()) return null;
 
   return (
     <>

@@ -127,7 +127,7 @@ const ProjectsSection = () => {
               initial="hidden"
               animate="show"
               exit="exit"
-              className="grid grid-cols-2 gap-5 lg:grid-cols-4"
+              className="flex flex-col gap-3 sm:grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-4"
             >
               {shown.map((project, i) => (
                 <motion.li
@@ -136,13 +136,20 @@ const ProjectsSection = () => {
                   variants={cardVariants}
                   className="scroll-mt-24"
                 >
-                  <ProjectCard
-                    project={project}
-                    index={start + i + 1}
-                    lang={lang}
-                    t={t}
-                    reduce={!!reduce}
-                  />
+                  {/* Linha compacta — telas pequenas */}
+                  <div className="sm:hidden">
+                    <ProjectListRow project={project} lang={lang} t={t} />
+                  </div>
+                  {/* Card com imagem — sm e acima */}
+                  <div className="hidden h-full sm:block">
+                    <ProjectCard
+                      project={project}
+                      index={start + i + 1}
+                      lang={lang}
+                      t={t}
+                      reduce={!!reduce}
+                    />
+                  </div>
                 </motion.li>
               ))}
             </motion.ul>
@@ -201,6 +208,94 @@ const MediaFrame = ({
     >
       {children}
     </a>
+  );
+};
+
+/** Linha compacta usada na lista mobile: thumb + título/descrição/tags + ações. */
+const ProjectListRow = ({
+  project,
+  lang,
+  t,
+}: {
+  project: Project;
+  lang: "pt" | "en";
+  t: (k: string) => string;
+}) => {
+  const [imgOk, setImgOk] = useState(true);
+  const description = project.description[lang] || t("projects.todoDesc");
+  const visibleTags = project.tags.slice(0, 2);
+  const extraTags = project.tags.length - visibleTags.length;
+
+  return (
+    <article className="flex items-center gap-3 rounded-xl border border-hairline bg-card p-3">
+      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-primary/15 to-secondary/15">
+        {imgOk ? (
+          <img
+            src={project.image}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            onError={() => setImgOk(false)}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="font-mono text-[10px] text-foreground/25">
+              {`<${project.name.split(" ")[0]}/>`}
+            </span>
+          </div>
+        )}
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <h3 className="truncate text-[14px] font-medium">{project.name}</h3>
+        <p className="mt-0.5 line-clamp-1 text-[12px] leading-[1.5] text-muted-foreground">
+          {description}
+        </p>
+        <div className="mt-1.5 flex flex-wrap gap-1">
+          {visibleTags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-md border border-hairline bg-muted/50 px-1.5 py-0.5 text-[10px] text-muted-foreground"
+            >
+              {tag}
+            </span>
+          ))}
+          {extraTags > 0 && (
+            <span className="rounded-md border border-hairline bg-muted/50 px-1.5 py-0.5 text-[10px] text-muted-foreground">
+              +{extraTags}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="flex shrink-0 items-center gap-1.5">
+        {project.live && (
+          <a
+            href={project.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${t("projects.viewSite")} — ${project.name}`}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-hairline text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            data-hover
+          >
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </a>
+        )}
+        {project.repo && (
+          <a
+            href={project.repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${t("projects.viewCode")} — ${project.name}`}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-hairline text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            data-hover
+          >
+            <Github className="h-3.5 w-3.5" />
+          </a>
+        )}
+      </div>
+    </article>
   );
 };
 

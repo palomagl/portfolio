@@ -86,10 +86,8 @@ para todas as âncoras (`#tecnologias`, `#sobre`, `#contato`) e todas existem.
 - **Fase 7 — Polimento (o que ainda falta):**
   - Respiro vertical do hero em telas altas ainda um pouco grande.
   - Conectores da timeline e do processo estão discretos demais; a referência tem setinha na ponta.
-  - Revisão de responsivo em mobile real (testado só no build/preview até agora).
+  - Revisão de responsivo em mobile real (testado via Playwright em viewport 390px; falta um teste em aparelho físico).
   - Trocar prints antigos soltos em `public/` pelos de `public/projects/`.
-  - `favicon.png` tem 452 KB — otimizar (é só a favicon agora, mas ainda pesa).
-  - `CustomCursor`: decidir se fica.
 
 ### Fase 7 — já feito
 - **Fase 5 — Tecnologias:** `TechSection.tsx` — grafo orbital (centro `</>` + 8 satélites: React,
@@ -121,6 +119,40 @@ para todas as âncoras (`#tecnologias`, `#sobre`, `#contato`) e todas existem.
 - **Logo própria:** `site.logo` (`/logo-redondo-180.png`) substitui o glifo `</>` na Navbar, no centro
   do grafo de tecnologias e no footer (frames arredondados como `rounded-full`, logo é redonda).
   A favicon (`/favicon.png` em `index.html`) continua separada.
+
+### Performance mobile (11/09)
+- **Causa raiz do "app pesado no celular":** os 5 prints de projeto em `public/projects/`
+  (`nath-beauty`, `df-marmores`, `doe-mais`, `baly`, `dashboard`) eram PNG cru 1920×1080,
+  2–2,3 MB cada (~10,6 MB só nessas 5 imagens) exibidos como thumbnail pequeno — pesadíssimo
+  em rede mobile. Recomprimidos com `sharp` (devDependency nova, uso recorrente pra imagens do
+  projeto) para WebP 1280×800 qualidade 74: caíram para 38–52 KB cada (~99% menor).
+  `favicon.png` (544×515, 442 KB) redimensionado para 180×180 → 5 KB. `projects.ts` atualizado
+  para os novos caminhos `.webp`.
+- **`CustomCursor.tsx`:** o early-return de touch (`return null`) vinha *depois* dos hooks, então
+  os listeners eram anexados mesmo em celular antes de decidir não renderizar nada. Pior: o
+  `MutationObserver` re-anexava `mouseenter`/`mouseleave` a cada mudança no DOM **sem nunca
+  remover os antigos** — vazamento de listeners que crescia a cada animação/reveal da página,
+  consumindo CPU continuamente mesmo sem cursor visível. Reescrito: checa touch antes de
+  qualquer `addEventListener`, e trocou os listeners por elemento por delegação de evento única
+  no `document` (`mouseover`/`mouseout` + `closest()`).
+- **`ParticleBackground.tsx`:** o canvas fullscreen rodava um loop `requestAnimationFrame` a
+  60fps o tempo todo (partículas + linhas de conexão O(n²) + repulsão pelo mouse), mesmo em
+  touch — onde o efeito de seguir o mouse não faz sentido e só drena bateria/CPU atrás da
+  página inteira. Agora touch device cai no mesmo caminho estático usado para
+  `prefers-reduced-motion` (desenha uma vez, sem RAF, sem listeners de pointer).
+- Validado com `tsc --noEmit`, `eslint`, `vitest` e `vite build` — todos limpos.
+
+### Projetos e Tecnologias no mobile (11/09)
+- **`ProjectsSection.tsx`:** telas `<640px` agora mostram uma lista compacta em linhas
+  (thumbnail 48×48 + título/descrição/tags + botões de ícone "abrir site"/"código") em vez da
+  grade de cards com imagem grande — pedido explícito pra melhorar a experiência no celular,
+  com referência visual. A grade de cards com imagem continua a partir de `sm:` (≥640px);
+  paginação, `#projeto-<slug>` e animações de transição são compartilhados entre os dois layouts
+  (mesmo `<li id="projeto-<slug>">`, só alterna o conteúdo interno por breakpoint).
+- **`TechSection.tsx`:** o grafo orbital, que antes só aparecia a partir de `sm:` (a grade 3
+  colunas cobria todo o mobile), agora aparece em qualquer largura — com nós, ícones e rótulos
+  menores no mobile (`h-8 w-8` → `sm:h-11 sm:w-11` etc.) pra não sobrepor. Grade 3 colunas
+  removida. `PostgreSQL` ganhou `short: "Postgres"` pra caber no rótulo em telas estreitas.
 
 ### Pendências de conteúdo (da Paloma)
 - [ ] Foto do hero → `public/paloma.jpg` (retrato ~900×1100).
