@@ -123,6 +123,12 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("portfolio-lang", l);
   };
 
+  // Mantém o atributo lang do documento coerente com o idioma exibido —
+  // importante pra leitor de tela pronunciar certo e pra SEO.
+  useEffect(() => {
+    document.documentElement.lang = lang === "en" ? "en" : "pt-BR";
+  }, [lang]);
+
   const t = (key: string): string => {
     return translations[key]?.[lang] ?? key;
   };
