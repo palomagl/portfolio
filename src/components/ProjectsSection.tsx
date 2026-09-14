@@ -399,7 +399,7 @@ const ProjectCard = ({
             {project.name}
           </span>
         </h3>
-        <p className="mt-1.5 line-clamp-2 text-[13px] leading-[1.6] text-muted-foreground">
+        <p className="mt-1.5 line-clamp-3 text-[13px] leading-[1.6] text-muted-foreground">
           {description}
         </p>
 
