@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Github, ImageIcon, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Download, Github, ImageIcon, Linkedin, Mail } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { site } from "@/data/site";
 
@@ -36,17 +36,25 @@ const HeroSection = () => {
       <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-28 lg:min-h-[calc(100vh-4rem)] lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
         {/* Coluna esquerda */}
         <div>
-          <div className="flex items-start justify-between gap-4">
-            <p className="hero-rise eyebrow mb-4">{t("hero.greeting")}</p>
+          <p className="hero-rise eyebrow mb-4">{t("hero.greeting")}</p>
 
-            {/* Foto — só no mobile/tablet, onde o retrato grande da coluna direita some.
-                Anel em gradiente (mesma dupla de cores do "Lorenzon" no H1) pra dar destaque
-                sem virar a foto gigante que ocupava a tela toda. */}
+          {/* Nome + foto — no mobile/tablet a foto entra no fluxo normal, ao lado
+              do nome (a coluna direita com o retrato grande some abaixo de lg).
+              Anel em gradiente (mesma dupla de cores do "Lorenzon" no H1) pra dar
+              destaque sem virar a foto gigante que ocupava a tela toda. */}
+          <div className="flex items-center gap-4 lg:block">
+            <h1
+              className="hero-rise min-w-0 flex-1 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-[68px]"
+              style={{ animationDelay: "0.08s" }}
+            >
+              Paloma <span className="text-gradient">Lorenzon</span>
+            </h1>
+
             <div
               className="hero-rise shrink-0 rounded-[28px] bg-gradient-to-br from-primary to-secondary p-[3px] shadow-[0_10px_30px_-10px_hsl(var(--glow-primary)/0.55)] lg:hidden"
               style={{ animationDelay: "0.08s" }}
             >
-              <div className="h-24 w-24 overflow-hidden rounded-[25px] bg-muted/60">
+              <div className="h-24 w-24 overflow-hidden rounded-[25px] bg-muted/60 sm:h-28 sm:w-28">
                 {photoState !== "ok" && (
                   <div className="flex h-full w-full items-center justify-center text-muted-foreground">
                     <ImageIcon className="h-6 w-6" aria-hidden="true" />
@@ -64,13 +72,6 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <h1
-            className="hero-rise text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-[68px]"
-            style={{ animationDelay: "0.08s" }}
-          >
-            Paloma <span className="text-gradient">Lorenzon</span>
-          </h1>
-
           <p
             className="hero-rise mt-6 max-w-md text-xl font-normal text-foreground sm:text-2xl"
             style={{ animationDelay: "0.16s" }}
@@ -85,10 +86,10 @@ const HeroSection = () => {
             {t("hero.tagline")}
           </p>
 
-          <div className="hero-rise mt-8 flex flex-wrap gap-4" style={{ animationDelay: "0.32s" }}>
+          <div className="hero-rise mt-8 flex flex-wrap items-center gap-2 sm:gap-4" style={{ animationDelay: "0.32s" }}>
             <a
               href="#projetos"
-              className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-transform hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="group inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-transform hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:gap-2 sm:px-6 sm:py-3"
               data-hover
             >
               {t("hero.projects")}
@@ -98,11 +99,23 @@ const HeroSection = () => {
               href={site.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-hairline px-6 py-3 text-sm font-medium transition-colors hover:border-primary/40 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              aria-label="GitHub"
+              className="inline-flex h-11 w-11 items-center justify-center gap-2 rounded-full border border-hairline text-sm font-medium transition-colors hover:border-primary/40 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:h-auto sm:w-auto sm:px-6 sm:py-3"
               data-hover
             >
-              <Github className="h-4 w-4" />
-              GitHub
+              <Github className="h-4 w-4 shrink-0" />
+              <span className="hidden sm:inline">GitHub</span>
+            </a>
+            <a
+              href={site.resume}
+              download
+              aria-label={t("hero.resume")}
+              className="inline-flex h-11 items-center justify-center gap-1.5 rounded-full border border-hairline px-3.5 text-sm font-medium transition-colors hover:border-primary/40 hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:h-auto sm:gap-2 sm:px-6 sm:py-3"
+              data-hover
+            >
+              <Download className="h-4 w-4 shrink-0" />
+              <span className="sm:hidden">CV</span>
+              <span className="hidden sm:inline">{t("hero.resume")}</span>
             </a>
           </div>
 
@@ -150,9 +163,11 @@ const HeroSection = () => {
             </li>
           </ul>
 
-          {/* Terminal compacto — só no mobile/tablet, no fluxo normal (sem a foto grande atrás) */}
+          {/* Terminal compacto — some em telas de celular pequenas (some peso visual
+              e espaço que sobra ali), volta a partir de sm (tablet) e some de novo
+              em lg, onde a coluna direita já tem seu próprio terminal */}
           <div
-            className="hero-rise mt-8 inline-block rounded-lg border border-hairline bg-card/95 p-3.5 font-mono text-[11px] shadow-sm lg:hidden"
+            className="hero-rise mt-8 hidden rounded-lg border border-hairline bg-card/95 p-3.5 font-mono text-[11px] shadow-sm sm:inline-block lg:hidden"
             style={{ animationDelay: "0.48s" }}
           >
             <div className="mb-2 flex gap-1.5" aria-hidden="true">
