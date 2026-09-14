@@ -1,14 +1,18 @@
+import { lazy, Suspense } from "react";
 import CustomCursor from "@/components/CustomCursor";
 import ParticleBackground from "@/components/ParticleBackground";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import ProjectsSection from "@/components/ProjectsSection";
-import JourneySection from "@/components/JourneySection";
-import ProcessSection from "@/components/ProcessSection";
-import TechSection from "@/components/TechSection";
-import AboutSection from "@/components/AboutSection";
-import SiteFooter from "@/components/SiteFooter";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+
+// Tudo abaixo da dobra carrega sob demanda — o Hero não precisa esperar o JS
+// de Projetos/Trajetória/Processo/Tecnologias/Sobre pra ficar interativo.
+const ProjectsSection = lazy(() => import("@/components/ProjectsSection"));
+const JourneySection = lazy(() => import("@/components/JourneySection"));
+const ProcessSection = lazy(() => import("@/components/ProcessSection"));
+const TechSection = lazy(() => import("@/components/TechSection"));
+const AboutSection = lazy(() => import("@/components/AboutSection"));
+const SiteFooter = lazy(() => import("@/components/SiteFooter"));
 
 const Index = () => {
   return (
@@ -25,13 +29,17 @@ const Index = () => {
         <Navbar />
         <main id="main-content" className="relative z-10">
           <HeroSection />
-          <ProjectsSection />
-          <JourneySection />
-          <ProcessSection />
-          <TechSection />
-          <AboutSection />
+          <Suspense fallback={null}>
+            <ProjectsSection />
+            <JourneySection />
+            <ProcessSection />
+            <TechSection />
+            <AboutSection />
+          </Suspense>
         </main>
-        <SiteFooter />
+        <Suspense fallback={null}>
+          <SiteFooter />
+        </Suspense>
       </div>
     </LanguageProvider>
   );
