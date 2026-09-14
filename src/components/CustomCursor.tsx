@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 const isTouchDevice = () =>
   typeof window !== "undefined" &&
@@ -10,12 +10,6 @@ const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min)
 const RING_DEFAULT = 34;
 const RING_PAD = 8;
 
-interface Ripple {
-  id: number;
-  x: number;
-  y: number;
-}
-
 /**
  * Cursor customizado:
  * - Ponto "cometa": segue o ponteiro quase 1:1 e estica na direção do
@@ -23,14 +17,11 @@ interface Ripple {
  * - Anel magnético: em repouso segue o ponteiro com leve atraso (spring);
  *   ao passar sobre `a`, `button` ou `[data-hover]`, morfa até o tamanho e
  *   formato do elemento (com puxão sutil na direção do ponteiro dentro dele).
- * - Pulso de clique: anel curto que expande e some a cada `mousedown`.
  * Some inteiramente em touch (sem cursor real, sem anexar nada).
  */
 const CustomCursor = () => {
   const [visible, setVisible] = useState(false);
   const [hovering, setHovering] = useState(false);
-  const [ripples, setRipples] = useState<Ripple[]>([]);
-  const rippleId = useRef(0);
 
   const dotX = useMotionValue(-100);
   const dotY = useMotionValue(-100);
@@ -165,20 +156,11 @@ const CustomCursor = () => {
       ringRadius.set(999);
     };
 
-    const handleDown = (e: MouseEvent) => {
-      const id = rippleId.current++;
-      setRipples((prev) => [...prev, { id, x: e.clientX, y: e.clientY }]);
-      window.setTimeout(() => {
-        setRipples((prev) => prev.filter((r) => r.id !== id));
-      }, 500);
-    };
-
     document.addEventListener("mousemove", handleMove, { passive: true });
     document.addEventListener("mouseenter", handleEnter, { passive: true });
     document.addEventListener("mouseleave", handleLeave, { passive: true });
     document.addEventListener("mouseover", handleOver, { passive: true });
     document.addEventListener("mouseout", handleOut, { passive: true });
-    document.addEventListener("mousedown", handleDown, { passive: true });
 
     return () => {
       window.clearTimeout(settleTimer);
@@ -188,7 +170,6 @@ const CustomCursor = () => {
       document.removeEventListener("mouseleave", handleLeave);
       document.removeEventListener("mouseover", handleOver);
       document.removeEventListener("mouseout", handleOut);
-      document.removeEventListener("mousedown", handleDown);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -224,21 +205,6 @@ const CustomCursor = () => {
         }}
         transition={{ borderColor: { duration: 0.2 }, backgroundColor: { duration: 0.2 } }}
       />
-
-      {/* Pulso de clique */}
-      <AnimatePresence>
-        {ripples.map((r) => (
-          <motion.div
-            key={r.id}
-            className="pointer-events-none fixed left-0 top-0 z-[9997] hidden h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary md:block"
-            style={{ x: r.x, y: r.y }}
-            initial={{ opacity: 0.6, scale: 1 }}
-            animate={{ opacity: 0, scale: 6 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          />
-        ))}
-      </AnimatePresence>
     </>
   );
 };

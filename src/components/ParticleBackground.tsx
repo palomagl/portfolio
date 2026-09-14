@@ -115,19 +115,6 @@ const ParticleBackground = () => {
         ctx.arc(p.x, p.y, p.size + glow * 1.6, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(${hsl} / ${p.base + glow * 0.5})`;
         ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const q = particles[j];
-          const dist = Math.hypot(p.x - q.x, p.y - q.y);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `hsla(${hsl} / ${0.05 * (1 - dist / 120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
       }
 
       if (running) raf = requestAnimationFrame(step);
