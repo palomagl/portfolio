@@ -7,6 +7,7 @@ export const site = {
   role: "Front-End Developer",
   logo: "/logo-redondo-180.png", // logo da marca (favicon fica separada, em index.html)
   photo: "/paloma.jpg",
+  resume: "/curriculo-paloma-lorenzon.pdf",
   email: "palomaalorenzon@gmail.com",
   links: {
     github: "https://github.com/palomagl",

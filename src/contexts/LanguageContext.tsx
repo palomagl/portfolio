@@ -28,6 +28,7 @@ const translations: Record<string, Record<Lang, string>> = {
     en: "I turn ideas into real solutions, focused on performance, good experiences and code that makes sense.",
   },
   "hero.projects": { pt: "Ver projetos", en: "View projects" },
+  "hero.resume": { pt: "Baixar currículo", en: "Download resume" },
   "hero.contact": { pt: "Contato", en: "Contact" },
   "hero.captionRole": { pt: "Front-End Developer", en: "Front-End Developer" },
   "hero.terminalNote": { pt: "ideias · código · projetos · realidade", en: "ideas · code · projects · reality" },
