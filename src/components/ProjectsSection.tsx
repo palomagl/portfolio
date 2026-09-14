@@ -9,10 +9,33 @@ import { projectBadges, projects, type Project } from "@/data/projects";
 const PER_PAGE = 8; // 2 fileiras × 4 colunas no desktop
 const PAGE_COUNT = Math.ceil(projects.length / PER_PAGE);
 
+/**
+ * true a partir do breakpoint `sm` do Tailwind (640px) — mesmo ponto de corte
+ * usado nas classes `sm:hidden`/`sm:block` abaixo. Decide em JS (não só CSS)
+ * qual variante do card montar, pra não baixar a imagem das duas ao mesmo
+ * tempo (um `display:none` não impede o `<img>` de ser buscado).
+ */
+const useIsCompactCard = () => {
+  const [compact, setCompact] = useState(() =>
+    typeof window === "undefined" ? true : !window.matchMedia("(min-width: 640px)").matches,
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 640px)");
+    const onChange = () => setCompact(!mql.matches);
+    onChange();
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+
+  return compact;
+};
+
 const ProjectsSection = () => {
   const { t, lang } = useLanguage();
   const { ref, revealClass } = useReveal<HTMLDivElement>();
   const reduce = useReducedMotion();
+  const compact = useIsCompactCard();
   const [[page, dir], setPage] = useState<[number, number]>([0, 0]);
 
   const goTo = useCallback(
@@ -136,20 +159,22 @@ const ProjectsSection = () => {
                   variants={cardVariants}
                   className="scroll-mt-24"
                 >
-                  {/* Linha compacta — telas pequenas */}
-                  <div className="sm:hidden">
+                  {/* Só uma variante é montada por vez (decidido em JS, não só
+                      CSS) — evita que o navegador busque a imagem das duas ao
+                      mesmo tempo num `display:none`. */}
+                  {compact ? (
                     <ProjectListRow project={project} lang={lang} t={t} />
-                  </div>
-                  {/* Card com imagem — sm e acima */}
-                  <div className="hidden h-full sm:block">
-                    <ProjectCard
-                      project={project}
-                      index={start + i + 1}
-                      lang={lang}
-                      t={t}
-                      reduce={!!reduce}
-                    />
-                  </div>
+                  ) : (
+                    <div className="h-full">
+                      <ProjectCard
+                        project={project}
+                        index={start + i + 1}
+                        lang={lang}
+                        t={t}
+                        reduce={!!reduce}
+                      />
+                    </div>
+                  )}
                 </motion.li>
               ))}
             </motion.ul>
@@ -225,13 +250,16 @@ const ProjectListRow = ({
   const description = project.description[lang] || t("projects.todoDesc");
   const visibleTags = project.tags.slice(0, 2);
   const extraTags = project.tags.length - visibleTags.length;
+  // Thumb pré-reduzido (160×100) — o card mobile mostra só 48×48px, não faz
+  // sentido baixar/decodificar a imagem cheia (1280×800) só pra isso.
+  const thumbSrc = project.image.replace("/projects/", "/projects/thumbs/");
 
   return (
     <article className="flex items-center gap-3 rounded-xl border border-hairline bg-card p-3">
       <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-primary/15 to-secondary/15">
         {imgOk ? (
           <img
-            src={project.image}
+            src={thumbSrc}
             alt=""
             aria-hidden="true"
             loading="lazy"
