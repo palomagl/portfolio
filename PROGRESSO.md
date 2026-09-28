@@ -154,18 +154,25 @@ para todas as âncoras (`#tecnologias`, `#sobre`, `#contato`) e todas existem.
   menores no mobile (`h-8 w-8` → `sm:h-11 sm:w-11` etc.) pra não sobrepor. Grade 3 colunas
   removida. `PostgreSQL` ganhou `short: "Postgres"` pra caber no rótulo em telas estreitas.
 
+### Atualização de projetos (27/09)
+- **Removido:** iPhone 17 Concept.
+- **Personal Dashboard → Minha Rotina** (1º card): tarefas, hábitos, finanças, notas, bot do Telegram, PWA.
+  Tags agora React/TypeScript/Firebase/Tailwind/PWA. Capa feita pela Paloma (`minha-rotina.png` → `.webp` 16:10).
+- **Novo: Meu Semestre** (`college-organizer-app`): organizador da faculdade EAD. Capa feita pela Paloma
+  (`public/projects/meu-semestre.png`, convertida pra 16:10 em `.webp`).
+- **DF Mármores → Vértice Mármores** (nome fictício, a venda não fechou): slug `marmoraria`, marca removida,
+  sem link do site/GitHub e sem print até o app ser renomeado. Print antigo com a marca apagado.
+- **NEXA IA:** link trocado para `nexa-ia-vert.vercel.app` (o `git-main` pedia login da Vercel).
+  A IA não responde em produção: o front precisa de `VITE_API_URL` apontando pro backend (`server/`, Render).
+- **Jogo da Forca:** capa com prints reais (Tkinter rodando) + descrição nova. **Hotel System:** descrição nova,
+  prints ainda faltam (JavaFX precisa rodar na máquina da Paloma, com o PostgreSQL local).
+
 ### Pendências de conteúdo (da Paloma)
-- [ ] Foto do hero → `public/paloma.jpg` (retrato ~900×1100).
-- [ ] Prints de capa dos projetos → `public/projects/<slug>.png` (1280×800). Slugs:
-      `doe-mais-rs`, `iphone-17-concept`, `baly-sabores`, `nath-lorenzon-beauty`, `df-marmores`,
-      `nexa-ia`, `studymaps`, `hotel-system`, `jogo-da-forca`
-      (`barbershop` e `personal-dashboard` já copiados dos prints antigos).
-- [ ] URL live do iPhone 17 Concept.
-- [ ] URL live do NEXA IA (quando publicar).
-- [ ] Descrição do DF Mármores (`projects.ts`, hoje vazia → card mostra "Descrição em breve").
-- [ ] Repositório do DF Mármores é privado → botão "Código" escondido até tornar público.
+- [ ] Prints do Hotel System (login + dashboard) → viram `public/projects/hotel-system.webp`.
+- [ ] Vértice Mármores: repositório e domínio já renomeados (`vertice-marmores`); falta trocar a marca DF Mármores
+      por dentro do app (textos, README) e mandar prints novos.
+- [ ] NEXA IA: fazer a IA funcionar em produção (ou tirar o link do site até lá).
 - [ ] Favicon do Baly Sabores.
-- [ ] `og-image.png` em `public/` (o `index.html` referencia e não existe).
 
 ---
 
