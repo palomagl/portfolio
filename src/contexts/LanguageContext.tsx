@@ -92,6 +92,7 @@ const translations: Record<string, Record<Lang, string>> = {
   "projects.next": { pt: "Próximos projetos", en: "Next projects" },
   "projects.page": { pt: "Página", en: "Page" },
   "projects.todoDesc": { pt: "Descrição em breve.", en: "Description coming soon." },
+  "projects.close": { pt: "Fechar", en: "Close" },
 
   // Journey
   "journey.eyebrow": { pt: "Experiência & trajetória", en: "Experience & journey" },
