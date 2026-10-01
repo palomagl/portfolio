@@ -154,6 +154,15 @@ para todas as âncoras (`#tecnologias`, `#sobre`, `#contato`) e todas existem.
   menores no mobile (`h-8 w-8` → `sm:h-11 sm:w-11` etc.) pra não sobrepor. Grade 3 colunas
   removida. `PostgreSQL` ganhou `short: "Postgres"` pra caber no rótulo em telas estreitas.
 
+### Novo projeto: Bruto (01/10)
+- Adicionado o **Bruto** (`borapedir-delivery/bruto`): loja de delivery multi-loja em Next.js,
+  com cardápio, carrinho, checkout e painel de pedidos. Roda sobre um "seed" em memória sem
+  precisar de banco configurado, então o preview sempre funciona.
+- Capa (`bruto-burger.webp`) é print real do app rodando, mandado pela Paloma.
+- Link do site: `borapedir-delivery.vercel.app/bruto`. Repo aponta pra subpasta `bruto/` do
+  monorepo `borapedir-delivery` (a base já é multi-loja por dentro — um segundo estabelecimento
+  cabe na mesma aplicação).
+
 ### Atualização de projetos (27/09)
 - **Removido:** iPhone 17 Concept.
 - **Personal Dashboard → Minha Rotina** (1º card): tarefas, hábitos, finanças, notas, bot do Telegram, PWA.
