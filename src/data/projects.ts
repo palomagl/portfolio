@@ -30,7 +30,9 @@ export type HighlightIcon =
   | "pie-chart"
   | "dice"
   | "trophy"
-  | "gamepad";
+  | "gamepad"
+  | "cart"
+  | "credit-card";
 
 export interface ProjectHighlight {
   icon: HighlightIcon;
@@ -271,6 +273,39 @@ export const projects: Project[] = [
         icon: "calculator",
         title: { pt: "Orçamento automático", en: "Automatic quotes" },
         caption: { pt: "Calcula o total na hora", en: "Calculates the total on the spot" },
+      },
+    ],
+  },
+
+  {
+    slug: "bruto-burger",
+    name: "Bruto",
+    kind: { pt: "Loja de delivery", en: "Delivery store" },
+    description: {
+      pt: "Loja de delivery multi-loja: cardápio, carrinho, checkout e painel de pedidos.",
+      en: "Multi-tenant delivery storefront: menu, cart, checkout and an order dashboard.",
+    },
+    tags: ["Next.js", "TypeScript", "Supabase", "Tailwind", "Zod"],
+    repo: "https://github.com/palomagl/borapedir-delivery/tree/main/bruto",
+    live: "https://borapedir-delivery.vercel.app/bruto",
+    image: "/projects/bruto-burger.webp",
+    badge: "",
+    group: "destaques",
+    highlights: [
+      {
+        icon: "cart",
+        title: { pt: "Pedido sem app", en: "Order with no app" },
+        caption: { pt: "Cardápio, carrinho e checkout no navegador", en: "Menu, cart and checkout in the browser" },
+      },
+      {
+        icon: "credit-card",
+        title: { pt: "Pix, cartão, dinheiro", en: "Pix, card, cash" },
+        caption: { pt: "E também vale-refeição", en: "Meal vouchers too" },
+      },
+      {
+        icon: "boxes",
+        title: { pt: "Pronta pra 2ª loja", en: "Ready for a 2nd store" },
+        caption: { pt: "A mesma base aguenta outro estabelecimento", en: "The same base can hold another business" },
       },
     ],
   },
